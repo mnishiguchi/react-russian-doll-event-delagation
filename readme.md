@@ -1,4 +1,4 @@
-# React event sensitivity control
+# React russian doll event detection
 
 ## Demo app
 
