@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
 import RussianDoll from './components/RussianDoll';
+require('./App.css');
 
 class App extends Component {
   render() {
@@ -12,7 +10,7 @@ class App extends Component {
           <h2>
             React russian doll event detection
             <br />
-            <small>with one event listener</small>
+            <small>with event-sensitivity control</small>
           </h2>
         </div>
         <div className="App-intro">

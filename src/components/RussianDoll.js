@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import NotificationSystem   from 'react-notification-system';
 
+import eventSensitivityControl from '../lib/event-sensitivity-control';
+
 const B1 = (props) => {
   return (
     <section className="B1">
@@ -48,8 +50,11 @@ class RussianDoll extends Component {
 
         <B1>
           <B2>
-            <section className="bottom">
-              This is the bottom.
+            <section className="bottom1">
+              This is the bottom1
+            </section>
+            <section className="bottom2">
+              This is the bottom2
             </section>
           </B2>
         </B1>
@@ -60,6 +65,26 @@ class RussianDoll extends Component {
   componentDidMount() {
     // Set up the notification system.
     this._notificationSystem = this.refs.notificationSystem;
+
+
+    this._listeners = [];
+    [
+      '.RussianDoll',
+      '.B1',
+      '.B2',
+      '.bottom1',
+      '.bottom2',
+    ].forEach(selector => {
+      const element = document.querySelector(selector);
+      this._listeners.push( this._setListener( element ) );
+    })
+  }
+
+  componentWillUnmount() {
+    this._listeners.forEach(listener => {
+      listener.remove();
+    })
+    this._listeners = [];
   }
 
   _addNotification(message, level='success') {
@@ -75,10 +100,36 @@ class RussianDoll extends Component {
     const targetClass = event.target.classList[0];
 
     // Ignore notification-system elements
-    var r = new RegExp("notification")
+    const r = new RegExp("notification")
     if (r.test(targetClass)) { return true; }
 
     this._addNotification( `${targetClass} was ${eventType}ed` );
+  }
+
+  _setListener = (element) => {
+    // console.log(`${element.classList[0]} was registered`)
+
+    function onEnterHandler(e) {
+      // console.log('onEnterHandler was invoked')
+      e.target.style.backgroundColor = "#ff70ca";
+    }
+    function onExitHandler(e) {
+      // console.log('onExitHandler was invoked')
+      e.target.style.backgroundColor = "#caff70";
+    }
+    const options = {
+      sensitivity: 7,   // in pixels
+      interval   : 200, // in milliseconds
+      timeout    : 400  // in milliseconds
+    };
+    const listener = new eventSensitivityControl(
+      element,
+      onEnterHandler,
+      onExitHandler,
+      options
+    );
+
+    return listener;
   }
 }
 
