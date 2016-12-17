@@ -1,40 +1,39 @@
-import React, { Component } from 'react';
-import NotificationSystem   from 'react-notification-system';
+import React, { Component } from 'react'
+import NotificationSystem   from 'react-notification-system'
+
+const notificationStyle = {
+  NotificationItem: {
+    DefaultStyle: {
+      zIndex    : 10,
+      fontSize  : '1rem',
+      background: 'rgba(22, 82, 124, 0.8)',
+      color     : 'rgb(202,178,161)'
+    }
+  }
+}
 
 const B1 = (props) => {
   return (
-    <section className="B1">
-      This is B1
+    <section id="B1">
+      B1
       {props.children}
     </section>
   )
 }
 const B2 = (props) => {
   return (
-    <section className="B2">
-      This is B2
+    <section id="B2">
+      B2
       {props.children}
     </section>
   )
 }
 
 class RussianDoll extends Component {
-
   render() {
-    const notificationStyles = {
-      NotificationItem: { // Override the notification item
-        DefaultStyle: { // SearchPagelied to every notification, regardless of the notification level
-          zIndex    : 10,
-          fontSize  : '20px',
-          background: 'rgba(22, 82, 124, 0.8)',
-          color     : 'rgb(202,178,161)'
-        }
-      }
-    };
-
     return (
       <section
-        className="RussianDoll"
+        id="RussianDoll"
         onClick={e => this._handleAllEvents(e)}
         onDoubleClick={e => this._handleAllEvents(e)}
         onMouseOver={e => this._handleAllEvents(e)}
@@ -43,27 +42,30 @@ class RussianDoll extends Component {
 
         <NotificationSystem
           ref="notificationSystem"
-          style={notificationStyles}
+          style={notificationStyle}
         />
 
+        RusianDoll
+        <br />
+        <small>I have the event listener.</small>
         <B1>
           <B2>
-            <section className="bottom">
-              This is the bottom.
+            <section id="bottom">
+              bottom
             </section>
           </B2>
         </B1>
       </section>
-    );
+    )
   }
 
   componentDidMount() {
     // Set up the notification system.
-    this._notificationSystem = this.refs.notificationSystem;
+    this._notificationSystem = this.refs.notificationSystem
   }
 
   _addNotification(message, level='success') {
-    this._notificationSystem.addNotification({message, level});
+    this._notificationSystem.addNotification({message, level})
   }
 
   /**
@@ -71,15 +73,15 @@ class RussianDoll extends Component {
    * https://facebook.github.io/react/docs/events.html#mouse-events
    */
   _handleAllEvents = (event) => {
-    const eventType   = event.type;
-    const targetClass = event.target.classList[0];
-
     // Ignore notification-system elements
-    var r = new RegExp("notification")
-    if (r.test(targetClass)) { return true; }
+    const r = new RegExp("notification")
+    if (r.test(event.target.classList[0])) {
+      this._addNotification( `Notification was ${event.type}'d` )
+      return true
+    }
 
-    this._addNotification( `${targetClass} was ${eventType}ed` );
+    this._addNotification( `${event.target.id} was ${event.type}'d` )
   }
 }
 
-export default RussianDoll;
+export default RussianDoll

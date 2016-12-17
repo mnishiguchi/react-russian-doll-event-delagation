@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -25,24 +29,33 @@ section {
   margin: 0 auto;
   color: #666;
 }
-.RussianDoll {
+#A1 {
+  background: #FFA570;
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+
+}
+#RussianDoll {
+  background: #ddd;
+  width: 100%;
   border: 4px solid #666;
   padding: 2rem 0;
   margin: 2rem 0;
 }
-.B1 {
+#B1 {
   background: #70caff;
-  width: 300px;
+  max-width: 300px;
   height: 300px;
 }
-.B2 {
+#B2 {
   background: #caff70;
-  width: 200px;
+  max-width: 200px;
   height: 200px;
 }
-.bottom {
+#bottom {
   background: #ff70ca;
-  width: 100px;
+  max-width: 100px;
   height: 100px;
 }
 
